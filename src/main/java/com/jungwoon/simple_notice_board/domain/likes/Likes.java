@@ -1,13 +1,12 @@
 package com.jungwoon.simple_notice_board.domain.likes;
 
+import com.jungwoon.simple_notice_board.domain.posts.Posts;
+import com.jungwoon.simple_notice_board.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -17,13 +16,16 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long UserId;
+    @ManyToOne
+    private Users Users;
 
-    private Long postId;
+    @ManyToOne
+    private Posts posts;
 
     @Builder
-    public Likes(Long userId, Long postId) {
-        UserId = userId;
-        this.postId = postId;
+
+    public Likes(com.jungwoon.simple_notice_board.domain.users.Users users, Posts posts) {
+        Users = users;
+        this.posts = posts;
     }
 }

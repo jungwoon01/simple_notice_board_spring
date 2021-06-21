@@ -1,13 +1,12 @@
 package com.jungwoon.simple_notice_board.domain.visits;
 
+import com.jungwoon.simple_notice_board.domain.posts.Posts;
+import com.jungwoon.simple_notice_board.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -17,13 +16,15 @@ public class Visits {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long visitorId;
+    @ManyToOne
+    private Users users;
 
-    private Long postId;
+    @ManyToOne
+    private Posts posts;
 
     @Builder
-    public Visits(Long visitorId, Long postId) {
-        this.visitorId = visitorId;
-        this.postId = postId;
+    public Visits(Users users, Posts posts) {
+        this.users = users;
+        this.posts = posts;
     }
 }

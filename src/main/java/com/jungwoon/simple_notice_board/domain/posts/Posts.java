@@ -20,16 +20,16 @@ public class Posts {
 
     // 작성자
     @ManyToOne
-    private Users user;
+    private Users author;
 
     private String content;
 
     private String attachedFile;
 
     @Builder
-    public Posts(String title, Users user, String content, String attachedFile) {
+    public Posts(String title, Users author, String content, String attachedFile) {
         this.title = title;
-        this.user = user;
+        this.author = author;
         this.content = content;
         this.attachedFile = attachedFile;
     }

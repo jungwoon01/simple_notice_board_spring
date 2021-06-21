@@ -54,7 +54,7 @@ public class PostsRepositoryTest {
 
         postsRepository.save(Posts.builder()
                 .title(title)
-                .user(user)
+                .author(user)
                 .content(content)
                 .attachedFile(attachedFile)
                 .build()
@@ -66,7 +66,7 @@ public class PostsRepositoryTest {
         // then
         Posts posts = postsList.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
-        assertThat(posts.getUser().getEmail()).isEqualTo(user.getEmail());
+        assertThat(posts.getAuthor().getEmail()).isEqualTo(user.getEmail());
         assertThat(posts.getContent()).isEqualTo(content);
         assertThat(posts.getAttachedFile()).isEqualTo(attachedFile);
     }

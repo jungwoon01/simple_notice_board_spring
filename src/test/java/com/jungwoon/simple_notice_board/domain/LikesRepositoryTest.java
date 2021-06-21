@@ -45,7 +45,7 @@ public class LikesRepositoryTest {
 
         post = Posts.builder()
                 .title("제목")
-                .user(user)
+                .author(user)
                 .content("내용")
                 .attachedFile("첨부파일")
                 .build();

@@ -2,6 +2,7 @@ package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.posts.Posts;
 import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
+import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
 import com.jungwoon.simple_notice_board.domain.visits.Visits;
@@ -38,7 +39,7 @@ public class VisitsRepositoryTest {
     void setData() {
         user = Users.builder()
                 .email("test@test.com")
-                .gender("남자")
+                .gender(Gender.MALE)
                 .address("주소")
                 .profileImg("프로필사진")
                 .build();

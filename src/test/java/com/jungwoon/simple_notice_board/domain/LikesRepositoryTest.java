@@ -4,6 +4,7 @@ import com.jungwoon.simple_notice_board.domain.likes.Likes;
 import com.jungwoon.simple_notice_board.domain.likes.LikesRepository;
 import com.jungwoon.simple_notice_board.domain.posts.Posts;
 import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
+import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -38,7 +39,7 @@ public class LikesRepositoryTest {
     void setData() {
         user = Users.builder()
                 .email("test@test.com")
-                .gender("남자")
+                .gender(Gender.MALE)
                 .address("주소")
                 .profileImg("프로필사진")
                 .build();

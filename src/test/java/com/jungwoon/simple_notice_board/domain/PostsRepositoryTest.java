@@ -2,6 +2,7 @@ package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.posts.Posts;
 import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
+import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -30,7 +31,7 @@ public class PostsRepositoryTest {
     public void setUser() {
         user = Users.builder()
                 .email("이메일")
-                .gender("남자")
+                .gender(Gender.MALE)
                 .profileImg("사진")
                 .address("주소")
                 .build();

@@ -1,5 +1,6 @@
 package com.jungwoon.simple_notice_board.domain;
 
+import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -27,7 +28,7 @@ public class UsersRepositoryTest {
     public void readUsers() {
         // given
         String email = "test@test.com";
-        String gender = "남자";
+        Gender gender = Gender.MALE;
         String profileImg = "이미지";
         String address = "주소";
 

@@ -20,14 +20,14 @@ public class Users {
 
     private String email;
 
-    private String gender;
+    private Gender gender;
 
     private String profileImg;
 
     private String address;
 
     @Builder
-    public Users(String email, String gender, String profileImg, String address) {
+    public Users(String email, Gender gender, String profileImg, String address) {
         this.email = email;
         this.gender = gender;
         this.profileImg = profileImg;

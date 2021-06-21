@@ -6,11 +6,14 @@ import com.jungwoon.simple_notice_board.domain.posts.Posts;
 import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,14 +34,7 @@ public class LikesRepositoryTest {
     Users user;
 
     @BeforeEach
-    public void setData() {
-        post = Posts.builder()
-                .title("제목")
-                .author("작성자")
-                .content("내용")
-                .attachedFile("첨부파일")
-                .build();
-
+    void setData() {
         user = Users.builder()
                 .email("test@test.com")
                 .gender("남자")
@@ -46,7 +42,19 @@ public class LikesRepositoryTest {
                 .profileImg("프로필사진")
                 .build();
 
+        post = Posts.builder()
+                .title("제목")
+                .user(user)
+                .content("내용")
+                .attachedFile("첨부파일")
+                .build();
+    }
+
+    @AfterEach
+    public void deleteData() {
         likesRepository.deleteAll();
+        postsRepository.deleteAll();
+        usersRepository.deleteAll();
     }
 
     @Test
@@ -55,19 +63,23 @@ public class LikesRepositoryTest {
                 () -> likesRepository.save(Likes.builder()
                 .posts(post)
                 .users(user)
-                .build()));
+                .build())
+        );
     }
 
     @Test
     public void saveTest() {
         // given
-        postsRepository.save(post);
         usersRepository.save(user);
+        postsRepository.save(post);
+
+        List<Users> usersList = usersRepository.findAll();
+        List<Posts> postsList = postsRepository.findAll();
 
         // when
         likesRepository.save(Likes.builder()
-                .posts(post)
-                .users(user)
+                .posts(postsList.get(0))
+                .users(usersList.get(0))
                 .build());
 
         Long count = likesRepository.count();

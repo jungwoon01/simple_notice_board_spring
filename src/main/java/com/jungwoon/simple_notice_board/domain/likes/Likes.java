@@ -23,7 +23,6 @@ public class Likes {
     private Posts posts;
 
     @Builder
-
     public Likes(com.jungwoon.simple_notice_board.domain.users.Users users, Posts posts) {
         Users = users;
         this.posts = posts;

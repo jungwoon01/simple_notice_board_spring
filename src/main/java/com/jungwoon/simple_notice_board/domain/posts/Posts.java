@@ -1,13 +1,11 @@
 package com.jungwoon.simple_notice_board.domain.posts;
 
+import com.jungwoon.simple_notice_board.domain.users.Users;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -19,16 +17,17 @@ public class Posts {
 
     private String title;
 
-    private String author;
+    @ManyToOne
+    private Users user;
 
     private String content;
 
     private String attachedFile;
 
     @Builder
-    public Posts(String title, String author, String content, String attachedFile) {
+    public Posts(String title, Users user, String content, String attachedFile) {
         this.title = title;
-        this.author = author;
+        this.user = user;
         this.content = content;
         this.attachedFile = attachedFile;
     }

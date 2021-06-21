@@ -2,6 +2,7 @@ package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,11 @@ public class UsersRepositoryTest {
 
     @Autowired
     UsersRepository usersRepository;
+
+    @AfterEach
+    public void deleteData() {
+        usersRepository.deleteAll();
+    }
 
     @Test
     public void readUsers() {

@@ -17,14 +17,14 @@ public class Likes {
     private Long id;
 
     @ManyToOne
-    private Users Users;
+    private Users users;
 
     @ManyToOne
     private Posts posts;
 
     @Builder
-    public Likes(com.jungwoon.simple_notice_board.domain.users.Users users, Posts posts) {
-        Users = users;
+    public Likes(Users users, Posts posts) {
+        this.users = users;
         this.posts = posts;
     }
 }

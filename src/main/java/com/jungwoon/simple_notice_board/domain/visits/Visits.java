@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+// 게시물 방문 정보 엔티티
 @Getter
 @NoArgsConstructor
 @Entity
@@ -16,9 +17,11 @@ public class Visits {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 방문 사용자
     @ManyToOne
     private Users users;
 
+    // 방문 게시물
     @ManyToOne
     private Posts posts;
 

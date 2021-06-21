@@ -25,6 +25,7 @@ public class PostsRepositoryTest {
 
     Users user;
 
+    // 테스트에 필요한 테이터 세팅
     @BeforeEach
     public void setUser() {
         user = Users.builder()
@@ -37,6 +38,7 @@ public class PostsRepositoryTest {
         usersRepository.save(user);
     }
 
+    // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
         postsRepository.deleteAll();

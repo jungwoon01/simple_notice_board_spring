@@ -22,6 +22,7 @@ public class UsersRepositoryTest {
         usersRepository.deleteAll();
     }
 
+    // 저장한 데이터 불러오는 테스트
     @Test
     public void readUsers() {
         // given

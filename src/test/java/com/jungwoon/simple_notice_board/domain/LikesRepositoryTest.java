@@ -33,6 +33,7 @@ public class LikesRepositoryTest {
     Posts post;
     Users user;
 
+    // 테스트에 필요한 필드 초기화
     @BeforeEach
     void setData() {
         user = Users.builder()
@@ -50,6 +51,7 @@ public class LikesRepositoryTest {
                 .build();
     }
 
+    // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
         likesRepository.deleteAll();
@@ -57,6 +59,7 @@ public class LikesRepositoryTest {
         usersRepository.deleteAll();
     }
 
+    // 외래키가 잘 설정 되었는지 테스트
     @Test
     public void foreignKeyTest() {
         assertThrows(InvalidDataAccessApiUsageException.class,
@@ -67,6 +70,7 @@ public class LikesRepositoryTest {
         );
     }
 
+    // 저장 테스트
     @Test
     public void saveTest() {
         // given

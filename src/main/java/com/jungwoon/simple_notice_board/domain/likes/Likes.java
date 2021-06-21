@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+// 게시물의 좋아요 Entity
 @Getter
 @NoArgsConstructor
 @Entity
@@ -16,9 +17,11 @@ public class Likes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 좋아요 누른 유저
     @ManyToOne
     private Users users;
 
+    // 좋아요 눌린 게시물
     @ManyToOne
     private Posts posts;
 

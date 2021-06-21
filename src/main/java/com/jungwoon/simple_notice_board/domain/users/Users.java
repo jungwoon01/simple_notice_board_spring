@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+// 사용자 정보 엔티티
 @Getter
 @NoArgsConstructor
 @Entity

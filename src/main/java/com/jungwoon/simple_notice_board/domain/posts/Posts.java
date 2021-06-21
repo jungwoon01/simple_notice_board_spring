@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+// 게시물 엔티티
 @Getter
 @NoArgsConstructor
 @Entity
@@ -17,6 +18,7 @@ public class Posts {
 
     private String title;
 
+    // 작성자
     @ManyToOne
     private Users user;
 

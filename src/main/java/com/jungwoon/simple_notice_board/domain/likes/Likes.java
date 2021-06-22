@@ -1,5 +1,6 @@
 package com.jungwoon.simple_notice_board.domain.likes;
 
+import com.jungwoon.simple_notice_board.domain.BaseTimeEntity;
 import com.jungwoon.simple_notice_board.domain.posts.Posts;
 import com.jungwoon.simple_notice_board.domain.users.Users;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Likes {
+public class Likes extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

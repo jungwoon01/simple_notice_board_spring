@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -91,5 +92,25 @@ public class VisitsRepositoryTest {
 
         // then
         assertThat(count).isEqualTo(1);
+    }
+
+    @Test
+    public void CreatedAtTest() {
+        // given
+        LocalDateTime now = LocalDateTime.now();
+
+        usersRepository.save(user);
+        postsRepository.save(post);
+
+        // when
+        visitsRepository.save(Visits.builder()
+                .posts(post)
+                .users(user)
+                .build());
+
+        Visits visit = visitsRepository.findAll().get(0);
+
+        // then
+        assertThat(visit.getCreatedAt()).isAfter(now);
     }
 }

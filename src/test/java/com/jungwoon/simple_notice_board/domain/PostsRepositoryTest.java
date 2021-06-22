@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -25,6 +26,11 @@ public class PostsRepositoryTest {
     UsersRepository usersRepository;
 
     Users user;
+
+    // given
+    String title = "제목";
+    String content = "내용";
+    String attachedFile = "첨부파일";
 
     // 테스트에 필요한 테이터 세팅
     @BeforeEach
@@ -48,11 +54,6 @@ public class PostsRepositoryTest {
 
     @Test
     public void get() {
-        // given
-        String title = "제목";
-        String content = "내용";
-        String attachedFile = "첨부파일";
-
         postsRepository.save(Posts.builder()
                 .title(title)
                 .author(user)
@@ -70,5 +71,53 @@ public class PostsRepositoryTest {
         assertThat(posts.getAuthor().getEmail()).isEqualTo(user.getEmail());
         assertThat(posts.getContent()).isEqualTo(content);
         assertThat(posts.getAttachedFile()).isEqualTo(attachedFile);
+    }
+
+    // createdAt 자동 추가 테스트
+    @Test
+    public void CreatedAtTest() {
+        // given
+        LocalDateTime now = LocalDateTime.now();
+
+        // when
+        postsRepository.save(Posts.builder()
+                .title(title)
+                .author(user)
+                .content(content)
+                .attachedFile(attachedFile)
+                .build()
+        );
+
+        Posts post = postsRepository.findAll().get(0);
+        LocalDateTime createdAt = post.getCreatedAt();
+
+        // then
+        assertThat(createdAt).isAfter(now);
+    }
+
+    // modifiedAt 자동 수정
+    @Test
+    public void ModifiedAtTest() {
+        // given
+        postsRepository.save(Posts.builder()
+                .title(title)
+                .author(user)
+                .content(content)
+                .attachedFile(attachedFile)
+                .build()
+        );
+
+        Posts post = postsRepository.findAll().get(0);
+        LocalDateTime before = post.getModifiedAt();
+
+        // when
+        post.update("수정 제목", "수정 내용", "수정 파일");
+        postsRepository.save(post);
+
+        Posts modifiedPost = postsRepository.findById(post.getId()).orElseThrow();
+
+        // then
+        assertThat(modifiedPost.getCreatedAt()).isEqualTo(post.getCreatedAt());
+        assertThat(modifiedPost.getModifiedAt()).isAfter(before);
     }
 }

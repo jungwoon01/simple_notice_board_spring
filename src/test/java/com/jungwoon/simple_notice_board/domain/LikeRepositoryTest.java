@@ -61,6 +61,13 @@ public class LikeRepositoryTest {
         userRepository.deleteAll();
     }
 
+    @BeforeEach
+    public void clearTables() {
+        likeRepository.deleteAll();
+        postRepository.deleteAll();
+        userRepository.deleteAll();
+    }
+
     // 외래키가 잘 설정 되었는지 테스트
     @Test
     public void foreignKeyTest() {

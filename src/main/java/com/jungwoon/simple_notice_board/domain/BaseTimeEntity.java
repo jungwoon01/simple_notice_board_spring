@@ -1,6 +1,7 @@
 package com.jungwoon.simple_notice_board.domain;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 // createdDate, modifiedDate 를 자동으로 관리하는 역할을 한다.
 @Getter
 @MappedSuperclass
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseTimeEntity {
 

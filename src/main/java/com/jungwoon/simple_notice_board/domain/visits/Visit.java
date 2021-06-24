@@ -1,8 +1,8 @@
 package com.jungwoon.simple_notice_board.domain.visits;
 
 import com.jungwoon.simple_notice_board.domain.BaseTimeEntity;
-import com.jungwoon.simple_notice_board.domain.posts.Posts;
-import com.jungwoon.simple_notice_board.domain.users.Users;
+import com.jungwoon.simple_notice_board.domain.posts.Post;
+import com.jungwoon.simple_notice_board.domain.users.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,22 +13,22 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Visits extends BaseTimeEntity {
+public class Visit extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 방문 사용자
     @ManyToOne
-    private Users users;
+    private User user;
 
     // 방문 게시물
     @ManyToOne
-    private Posts posts;
+    private Post post;
 
     @Builder
-    public Visits(Users users, Posts posts) {
-        this.users = users;
-        this.posts = posts;
+    public Visit(User user, Post post) {
+        this.user = user;
+        this.post = post;
     }
 }

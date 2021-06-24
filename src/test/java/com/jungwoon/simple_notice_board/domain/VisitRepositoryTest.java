@@ -1,12 +1,12 @@
 package com.jungwoon.simple_notice_board.domain;
 
-import com.jungwoon.simple_notice_board.domain.posts.Posts;
-import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
+import com.jungwoon.simple_notice_board.domain.posts.Post;
+import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.Users;
-import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
-import com.jungwoon.simple_notice_board.domain.visits.Visits;
-import com.jungwoon.simple_notice_board.domain.visits.VisitsRepository;
+import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.users.UserRepository;
+import com.jungwoon.simple_notice_board.domain.visits.Visit;
+import com.jungwoon.simple_notice_board.domain.visits.VisitRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,31 +21,31 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class VisitsRepositoryTest {
+public class VisitRepositoryTest {
 
     @Autowired
-    VisitsRepository visitsRepository;
+    VisitRepository visitRepository;
 
     @Autowired
-    PostsRepository postsRepository;
+    PostRepository postRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
-    Posts post;
-    Users user;
+    Post post;
+    User user;
 
     // 테스트에 필요한 필드 초기화
     @BeforeEach
     void setData() {
-        user = Users.builder()
+        user = User.builder()
                 .email("test@test.com")
                 .gender(Gender.MALE)
                 .address("주소")
                 .profileImg("프로필사진")
                 .build();
 
-        post = Posts.builder()
+        post = Post.builder()
                 .title("제목")
                 .author(user)
                 .content("내용")
@@ -56,18 +56,18 @@ public class VisitsRepositoryTest {
     // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
-        visitsRepository.deleteAll();
-        postsRepository.deleteAll();
-        usersRepository.deleteAll();
+        visitRepository.deleteAll();
+        postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     // 외래키 적용 테스트
     @Test
     public void foreignKeyTest() {
         assertThrows(InvalidDataAccessApiUsageException.class,
-                () -> visitsRepository.save(Visits.builder()
-                        .posts(post)
-                        .users(user)
+                () -> visitRepository.save(Visit.builder()
+                        .post(post)
+                        .user(user)
                         .build())
         );
     }
@@ -76,19 +76,19 @@ public class VisitsRepositoryTest {
     @Test
     public void saveTest() {
         // given
-        usersRepository.save(user);
-        postsRepository.save(post);
+        userRepository.save(user);
+        postRepository.save(post);
 
-        List<Users> usersList = usersRepository.findAll();
-        List<Posts> postsList = postsRepository.findAll();
+        List<User> userList = userRepository.findAll();
+        List<Post> postList = postRepository.findAll();
 
         // when
-        visitsRepository.save(Visits.builder()
-                .posts(postsList.get(0))
-                .users(usersList.get(0))
+        visitRepository.save(Visit.builder()
+                .post(postList.get(0))
+                .user(userList.get(0))
                 .build());
 
-        Long count = visitsRepository.count();
+        Long count = visitRepository.count();
 
         // then
         assertThat(count).isEqualTo(1);
@@ -99,16 +99,16 @@ public class VisitsRepositoryTest {
         // given
         LocalDateTime now = LocalDateTime.now();
 
-        usersRepository.save(user);
-        postsRepository.save(post);
+        userRepository.save(user);
+        postRepository.save(post);
 
         // when
-        visitsRepository.save(Visits.builder()
-                .posts(post)
-                .users(user)
+        visitRepository.save(Visit.builder()
+                .post(post)
+                .user(user)
                 .build());
 
-        Visits visit = visitsRepository.findAll().get(0);
+        Visit visit = visitRepository.findAll().get(0);
 
         // then
         assertThat(visit.getCreatedAt()).isAfter(now);

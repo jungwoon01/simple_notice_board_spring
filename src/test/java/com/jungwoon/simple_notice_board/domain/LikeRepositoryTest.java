@@ -1,12 +1,12 @@
 package com.jungwoon.simple_notice_board.domain;
 
-import com.jungwoon.simple_notice_board.domain.likes.Likes;
-import com.jungwoon.simple_notice_board.domain.likes.LikesRepository;
-import com.jungwoon.simple_notice_board.domain.posts.Posts;
-import com.jungwoon.simple_notice_board.domain.posts.PostsRepository;
+import com.jungwoon.simple_notice_board.domain.likes.Like;
+import com.jungwoon.simple_notice_board.domain.likes.LikeRepository;
+import com.jungwoon.simple_notice_board.domain.posts.Post;
+import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.Users;
-import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
+import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.users.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,31 +21,31 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class LikesRepositoryTest {
+public class LikeRepositoryTest {
 
     @Autowired
-    LikesRepository likesRepository;
+    LikeRepository likeRepository;
 
     @Autowired
-    PostsRepository postsRepository;
+    PostRepository postRepository;
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
-    Posts post;
-    Users user;
+    Post post;
+    User user;
 
     // 테스트에 필요한 필드 초기화
     @BeforeEach
     void setData() {
-        user = Users.builder()
+        user = User.builder()
                 .email("test@test.com")
                 .gender(Gender.MALE)
                 .address("주소")
                 .profileImg("프로필사진")
                 .build();
 
-        post = Posts.builder()
+        post = Post.builder()
                 .title("제목")
                 .author(user)
                 .content("내용")
@@ -56,18 +56,18 @@ public class LikesRepositoryTest {
     // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
-        likesRepository.deleteAll();
-        postsRepository.deleteAll();
-        usersRepository.deleteAll();
+        likeRepository.deleteAll();
+        postRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     // 외래키가 잘 설정 되었는지 테스트
     @Test
     public void foreignKeyTest() {
         assertThrows(InvalidDataAccessApiUsageException.class,
-                () -> likesRepository.save(Likes.builder()
-                .posts(post)
-                .users(user)
+                () -> likeRepository.save(Like.builder()
+                .post(post)
+                .user(user)
                 .build())
         );
     }
@@ -76,19 +76,19 @@ public class LikesRepositoryTest {
     @Test
     public void saveTest() {
         // given
-        usersRepository.save(user);
-        postsRepository.save(post);
+        userRepository.save(user);
+        postRepository.save(post);
 
-        List<Users> usersList = usersRepository.findAll();
-        List<Posts> postsList = postsRepository.findAll();
+        List<User> userList = userRepository.findAll();
+        List<Post> postList = postRepository.findAll();
 
         // when
-        likesRepository.save(Likes.builder()
-                .posts(postsList.get(0))
-                .users(usersList.get(0))
+        likeRepository.save(Like.builder()
+                .post(postList.get(0))
+                .user(userList.get(0))
                 .build());
 
-        Long count = likesRepository.count();
+        Long count = likeRepository.count();
 
         // then
         assertThat(count).isEqualTo(1);
@@ -99,18 +99,19 @@ public class LikesRepositoryTest {
         // given
         LocalDateTime now = LocalDateTime.now();
 
-        usersRepository.save(user);
-        postsRepository.save(post);
+        userRepository.save(user);
+        postRepository.save(post);
 
         // when
-        likesRepository.save(Likes.builder()
-                .posts(post)
-                .users(user)
+        likeRepository.save(Like.builder()
+                .post(post)
+                .user(user)
                 .build());
 
-        Likes like = likesRepository.findAll().get(0);
+        Like like = likeRepository.findAll().get(0);
 
         // then
+        System.out.println(" >>> CreatedAt : " + like.getCreatedAt());
         assertThat(like.getCreatedAt()).isAfter(now);
     }
 }

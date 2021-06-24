@@ -1,15 +1,13 @@
 package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.Users;
-import com.jungwoon.simple_notice_board.domain.users.UsersRepository;
+import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.users.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,10 +15,10 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-public class UsersRepositoryTest {
+public class UserRepositoryTest {
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository userRepository;
 
     String email;
     Gender gender;
@@ -37,14 +35,14 @@ public class UsersRepositoryTest {
 
     @AfterEach
     public void deleteData() {
-        usersRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     // 저장한 데이터 불러오는 테스트
     @Test
     public void readUsers() {
         // given
-        usersRepository.save(Users.builder()
+        userRepository.save(User.builder()
                 .email(email)
                 .gender(gender)
                 .profileImg(profileImg)
@@ -53,14 +51,14 @@ public class UsersRepositoryTest {
         );
 
         // when
-        List<Users> usersList = usersRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
         // then
-        Users users = usersList.get(0);
-        assertThat(users.getEmail()).isEqualTo(email);
-        assertThat(users.getGender()).isEqualTo(gender);
-        assertThat(users.getProfileImg()).isEqualTo(profileImg);
-        assertThat(users.getAddress()).isEqualTo(address);
+        User user = userList.get(0);
+        assertThat(user.getEmail()).isEqualTo(email);
+        assertThat(user.getGender()).isEqualTo(gender);
+        assertThat(user.getProfileImg()).isEqualTo(profileImg);
+        assertThat(user.getAddress()).isEqualTo(address);
     }
 
     // 생성 시간 자동 저장 테스트
@@ -70,7 +68,7 @@ public class UsersRepositoryTest {
         LocalDateTime now = LocalDateTime.now();
 
         // when
-        usersRepository.save(Users.builder()
+        userRepository.save(User.builder()
                 .email(email)
                 .gender(gender)
                 .profileImg(profileImg)
@@ -78,9 +76,9 @@ public class UsersRepositoryTest {
                 .build()
         );
 
-        List<Users> usersList = usersRepository.findAll();
+        List<User> userList = userRepository.findAll();
 
-        Users user = usersList.get(0);
+        User user = userList.get(0);
 
         // then
         assertThat(user.getCreatedAt()).isAfter(now);
@@ -89,7 +87,7 @@ public class UsersRepositoryTest {
     @Test
     public void UpdatedAtTest() {
         // given
-        usersRepository.save(Users.builder()
+        userRepository.save(User.builder()
                 .email(email)
                 .gender(gender)
                 .profileImg(profileImg)
@@ -97,15 +95,15 @@ public class UsersRepositoryTest {
                 .build()
         );
 
-        Users user = usersRepository.findAll().get(0);
+        User user = userRepository.findAll().get(0);
         LocalDateTime before = user.getModifiedAt();
 
         // when
         user.update("이미지 수정", "주소 수정");
 
-        usersRepository.save(user);
+        userRepository.save(user);
 
-        LocalDateTime after = usersRepository.findAll().get(0).getModifiedAt();
+        LocalDateTime after = userRepository.findAll().get(0).getModifiedAt();
 
         // then
         assertThat(after).isAfter(before);

@@ -1,9 +1,10 @@
 package com.jungwoon.simple_notice_board.domain;
 
-import com.jungwoon.simple_notice_board.domain.likes.Like;
-import com.jungwoon.simple_notice_board.domain.likes.LikeRepository;
+import com.jungwoon.simple_notice_board.domain.likes.Likes;
+import com.jungwoon.simple_notice_board.domain.likes.LikesRepository;
 import com.jungwoon.simple_notice_board.domain.posts.Post;
 import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
+import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.User;
 import com.jungwoon.simple_notice_board.domain.users.UserRepository;
@@ -21,16 +22,19 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-public class LikeRepositoryTest {
+public class LikesRepositoryTest {
 
     @Autowired
-    LikeRepository likeRepository;
+    LikesRepository likesRepository;
 
     @Autowired
     PostRepository postRepository;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    Repositories repositories;
 
     Post post;
     User user;
@@ -56,23 +60,14 @@ public class LikeRepositoryTest {
     // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
-        likeRepository.deleteAll();
-        postRepository.deleteAll();
-        userRepository.deleteAll();
-    }
-
-    @BeforeEach
-    public void clearTables() {
-        likeRepository.deleteAll();
-        postRepository.deleteAll();
-        userRepository.deleteAll();
+        repositories.deleteDataOfAllTables();
     }
 
     // 외래키가 잘 설정 되었는지 테스트
     @Test
     public void foreignKeyTest() {
         assertThrows(InvalidDataAccessApiUsageException.class,
-                () -> likeRepository.save(Like.builder()
+                () -> likesRepository.save(Likes.builder()
                 .post(post)
                 .user(user)
                 .build())
@@ -90,12 +85,12 @@ public class LikeRepositoryTest {
         List<Post> postList = postRepository.findAll();
 
         // when
-        likeRepository.save(Like.builder()
+        likesRepository.save(Likes.builder()
                 .post(postList.get(0))
                 .user(userList.get(0))
                 .build());
 
-        Long count = likeRepository.count();
+        Long count = likesRepository.count();
 
         // then
         assertThat(count).isEqualTo(1);
@@ -110,12 +105,12 @@ public class LikeRepositoryTest {
         postRepository.save(post);
 
         // when
-        likeRepository.save(Like.builder()
+        likesRepository.save(Likes.builder()
                 .post(post)
                 .user(user)
                 .build());
 
-        Like like = likeRepository.findAll().get(0);
+        Likes like = likesRepository.findAll().get(0);
 
         // then
         System.out.println(" >>> CreatedAt : " + like.getCreatedAt());

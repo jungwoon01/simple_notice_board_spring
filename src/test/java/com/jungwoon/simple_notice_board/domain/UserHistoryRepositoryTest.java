@@ -1,5 +1,6 @@
 package com.jungwoon.simple_notice_board.domain;
 
+import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
 import com.jungwoon.simple_notice_board.domain.user_history.UserHistoryRepository;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.User;
@@ -17,11 +18,12 @@ public class UserHistoryRepositoryTest {
     UserHistoryRepository userHistoryRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    Repositories repositories;
 
     @AfterEach
     public void deleteData() {
-        userHistoryRepository.deleteAll();
-        userRepository.deleteAll();
+        repositories.deleteDataOfAllTables();
     }
 
     @Test

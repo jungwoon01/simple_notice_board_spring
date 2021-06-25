@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Like extends BaseTimeEntity {
+public class Likes extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,7 +27,7 @@ public class Like extends BaseTimeEntity {
     private Post post;
 
     @Builder
-    public Like(User user, Post post) {
+    public Likes(User user, Post post) {
         this.user = user;
         this.post = post;
     }

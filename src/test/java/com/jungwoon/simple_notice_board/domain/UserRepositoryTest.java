@@ -1,5 +1,6 @@
 package com.jungwoon.simple_notice_board.domain;
 
+import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.User;
 import com.jungwoon.simple_notice_board.domain.users.UserRepository;
@@ -20,6 +21,9 @@ public class UserRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    Repositories repositories;
+
     String email;
     Gender gender;
     String profileImg;
@@ -35,7 +39,7 @@ public class UserRepositoryTest {
 
     @AfterEach
     public void deleteData() {
-        userRepository.deleteAll();
+        repositories.deleteDataOfAllTables();
     }
 
     // 저장한 데이터 불러오는 테스트

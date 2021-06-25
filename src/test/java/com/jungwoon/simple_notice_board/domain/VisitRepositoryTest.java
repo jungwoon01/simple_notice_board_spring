@@ -2,6 +2,7 @@ package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.posts.Post;
 import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
+import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
 import com.jungwoon.simple_notice_board.domain.users.User;
 import com.jungwoon.simple_notice_board.domain.users.UserRepository;
@@ -32,6 +33,9 @@ public class VisitRepositoryTest {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    Repositories repositories;
+
     Post post;
     User user;
 
@@ -56,9 +60,7 @@ public class VisitRepositoryTest {
     // 사용한 테이블 데이터 모두 지우기
     @AfterEach
     public void deleteData() {
-        visitRepository.deleteAll();
-        postRepository.deleteAll();
-        userRepository.deleteAll();
+        repositories.deleteDataOfAllTables();
     }
 
     // 외래키 적용 테스트

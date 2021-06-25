@@ -99,7 +99,7 @@ public class LikesRepositoryTest {
     @Test
     public void createdAtTest() {
         // given
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
         userRepository.save(user);
         postRepository.save(post);

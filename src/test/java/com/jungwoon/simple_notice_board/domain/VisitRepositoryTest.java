@@ -99,7 +99,7 @@ public class VisitRepositoryTest {
     @Test
     public void CreatedAtTest() {
         // given
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
         userRepository.save(user);
         postRepository.save(post);

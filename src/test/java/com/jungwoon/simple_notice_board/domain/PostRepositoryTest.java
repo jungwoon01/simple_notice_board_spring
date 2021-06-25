@@ -80,7 +80,7 @@ public class PostRepositoryTest {
     @Test
     public void CreatedAtTest() {
         // given
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
         // when
         postRepository.save(Post.builder()

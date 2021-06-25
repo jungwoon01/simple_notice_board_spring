@@ -69,7 +69,7 @@ public class UserRepositoryTest {
     @Test
     public void CreatedAtTest() {
         // given
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
         // when
         userRepository.save(User.builder()

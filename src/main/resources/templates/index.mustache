@@ -1,0 +1,27 @@
+{{>layout/header}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Hello World!</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/user/list" class="btn btn-primary" role="button">유저 목록</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            {{^userEmail}}
+            <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+            {{/userEmail}}
+
+            {{#userEmail}}
+                Logged in as: <span id="user">{{userEmail}}</span>
+                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+            {{/userEmail}}
+        </div>
+    </div>
+</div>
+{{>layout/footer}}
+

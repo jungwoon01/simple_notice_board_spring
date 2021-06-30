@@ -38,3 +38,5 @@ out/
 
 # Mysql connection properties
 application-mysql.properties
+# OAuth properties
+application-oauth.properties

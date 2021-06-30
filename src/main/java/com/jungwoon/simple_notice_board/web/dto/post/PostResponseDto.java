@@ -2,7 +2,6 @@ package com.jungwoon.simple_notice_board.web.dto.post;
 
 import com.jungwoon.simple_notice_board.domain.posts.Post;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class PostResponseDto {

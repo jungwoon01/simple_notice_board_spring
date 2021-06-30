@@ -6,6 +6,7 @@ import com.jungwoon.simple_notice_board.domain.posts.Post;
 import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
 import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
 import com.jungwoon.simple_notice_board.domain.users.Gender;
+import com.jungwoon.simple_notice_board.domain.users.Role;
 import com.jungwoon.simple_notice_board.domain.users.User;
 import com.jungwoon.simple_notice_board.domain.users.UserRepository;
 import org.junit.jupiter.api.AfterEach;

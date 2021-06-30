@@ -1,0 +1,51 @@
+{{>layout/header}}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <a href="/" class="btn btn-success active" role="button">메인으로</a>
+
+            {{#userEmail}}
+                Logged in as: <span id="user">{{userEmail}}</span>
+                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+            {{/userEmail}}
+        </div>
+    </div>
+    <br>
+    <!--목록 출력 영역-->
+    <div class="row">
+        <div class="col-sm-12">
+
+            <table class="table table-horizontal table-bordered">
+                <thead class="thead-strong">
+                <tr>
+                    <th>번호</th>
+                    <th>이메일</th>
+                    <th>성별</th>
+                    <th>이미지</th>
+                    <th>주소</th>
+                    <th>등급</th>
+                    <th>가입사이트</th>
+                    <th>가입일</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                {{#users}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{email}}</td>
+                        <td>{{gender}}</td>
+                        <td>{{profileImg}}</td>
+                        <td>{{address}}</td>
+                        <td>{{role}}</td>
+                        <td>{{registrationId}}</td>
+                        <td>{{createdAt}}</td>
+                    </tr>
+                {{/users}}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+{{>layout/footer}}

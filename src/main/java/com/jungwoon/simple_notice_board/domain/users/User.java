@@ -24,6 +24,7 @@ public class User extends BaseTimeEntity {
 
     private String email;
 
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private String profileImg;
@@ -35,16 +36,33 @@ public class User extends BaseTimeEntity {
     @ToString.Exclude
     private List<UserHistory> userHistories;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Column(nullable = false)
+    private String registrationId;
+
     @Builder
-    public User(String email, Gender gender, String profileImg, String address) {
+    public User(String email, Gender gender, String profileImg, String address, Role role, String registrationId) {
         this.email = email;
         this.gender = gender;
         this.profileImg = profileImg;
         this.address = address;
+        this.role = role;
+        this.registrationId = registrationId;
     }
 
     public void update(String profileImg, String address) {
         this.profileImg = profileImg;
         this.address = address;
+    }
+
+    public User profileImgUpdate(String profileImg) {
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.role.getKey();
     }
 }

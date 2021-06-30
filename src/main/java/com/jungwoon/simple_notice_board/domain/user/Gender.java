@@ -1,12 +1,13 @@
-package com.jungwoon.simple_notice_board.domain.users;
+package com.jungwoon.simple_notice_board.domain.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum Role {
-    USER("ROLE_USER", "사용자"), HOST("ROLE_HOST", "관리자");
+public enum Gender {
+    MALE("ROLE_MALE", "남자"),
+    FEMALE("ROLE_FEMALE", "여자");
 
     private final String key;
     private final String title;

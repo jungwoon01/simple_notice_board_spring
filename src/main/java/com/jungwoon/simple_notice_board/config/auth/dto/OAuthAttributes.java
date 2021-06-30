@@ -1,8 +1,8 @@
 package com.jungwoon.simple_notice_board.config.auth.dto;
 
-import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.Role;
-import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.user.Gender;
+import com.jungwoon.simple_notice_board.domain.user.Role;
+import com.jungwoon.simple_notice_board.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 

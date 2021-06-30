@@ -1,7 +1,7 @@
-package com.jungwoon.simple_notice_board.domain.posts;
+package com.jungwoon.simple_notice_board.domain.post;
 
 import com.jungwoon.simple_notice_board.domain.BaseTimeEntity;
-import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

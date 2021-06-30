@@ -1,7 +1,6 @@
 package com.jungwoon.simple_notice_board.service.user;
 
-import com.jungwoon.simple_notice_board.domain.users.User;
-import com.jungwoon.simple_notice_board.domain.users.UserRepository;
+import com.jungwoon.simple_notice_board.domain.user.UserRepository;
 import com.jungwoon.simple_notice_board.web.dto.user.UserListDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

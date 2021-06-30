@@ -1,6 +1,6 @@
 package com.jungwoon.simple_notice_board.config.auth.dto;
 
-import com.jungwoon.simple_notice_board.domain.users.User;
+import com.jungwoon.simple_notice_board.domain.user.User;
 import lombok.Getter;
 
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package com.jungwoon.simple_notice_board.domain.posts;
+package com.jungwoon.simple_notice_board.domain.post;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.jungwoon.simple_notice_board.domain.users;
+package com.jungwoon.simple_notice_board.domain.user;
 
 import com.jungwoon.simple_notice_board.domain.BaseTimeEntity;
 import com.jungwoon.simple_notice_board.domain.user_history.UserHistory;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 // 사용자 정보 엔티티

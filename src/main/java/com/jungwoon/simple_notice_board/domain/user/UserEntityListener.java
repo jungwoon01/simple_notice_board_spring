@@ -1,4 +1,4 @@
-package com.jungwoon.simple_notice_board.domain.users;
+package com.jungwoon.simple_notice_board.domain.user;
 
 import com.jungwoon.simple_notice_board.domain.user_history.UserHistory;
 import com.jungwoon.simple_notice_board.domain.user_history.UserHistoryRepository;

@@ -2,8 +2,8 @@ package com.jungwoon.simple_notice_board.service.oauth;
 
 import com.jungwoon.simple_notice_board.config.auth.dto.OAuthAttributes;
 import com.jungwoon.simple_notice_board.config.auth.dto.SessionUser;
-import com.jungwoon.simple_notice_board.domain.users.User;
-import com.jungwoon.simple_notice_board.domain.users.UserRepository;
+import com.jungwoon.simple_notice_board.domain.user.User;
+import com.jungwoon.simple_notice_board.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

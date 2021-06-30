@@ -1,13 +1,13 @@
 package com.jungwoon.simple_notice_board.domain;
 
-import com.jungwoon.simple_notice_board.domain.posts.Post;
-import com.jungwoon.simple_notice_board.domain.posts.PostRepository;
+import com.jungwoon.simple_notice_board.domain.post.Post;
+import com.jungwoon.simple_notice_board.domain.post.PostRepository;
 import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
-import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.User;
-import com.jungwoon.simple_notice_board.domain.users.UserRepository;
-import com.jungwoon.simple_notice_board.domain.visits.Visit;
-import com.jungwoon.simple_notice_board.domain.visits.VisitRepository;
+import com.jungwoon.simple_notice_board.domain.user.Gender;
+import com.jungwoon.simple_notice_board.domain.user.User;
+import com.jungwoon.simple_notice_board.domain.user.UserRepository;
+import com.jungwoon.simple_notice_board.domain.visit.Visit;
+import com.jungwoon.simple_notice_board.domain.visit.VisitRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

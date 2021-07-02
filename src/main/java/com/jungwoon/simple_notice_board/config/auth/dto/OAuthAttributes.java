@@ -26,6 +26,16 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        // 네이버 로그인이면 userNameAttributeName 을 id로 지정
+        if("naver".equals(registrationId)) {
+            return ofNaver(registrationId,"id", attributes);
+        }
+
+        // 카카오 로그인이면 userNameAttributeName 을 id로 지정
+        if("kakao".equals(registrationId)) {
+            return ofKakao(registrationId,"id", attributes);
+        }
+
         return ofGoogle(registrationId, userNameAttributeName, attributes);
     }
 
@@ -33,6 +43,33 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
+                .registrationId(registrationId)
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofNaver(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        return OAuthAttributes.builder()
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .registrationId(registrationId)
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofKakao(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+        Map<String,Object> response = (Map<String, Object>)attributes.get("kakao_account");
+        Map<String, Object> profile = (Map<String, Object>) response.get("profile");
+
+        System.out.println(attributes);
+
+        return OAuthAttributes.builder()
+                .email((String) response.get("email"))
+                .picture((String) profile.get("profile_image_url"))
                 .registrationId(registrationId)
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)

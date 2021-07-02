@@ -29,39 +29,21 @@ public class PostRepositoryTest {
     @Autowired
     Repositories repositories;
 
-    User user;
-
-    // given
-    String title = "제목";
-    String content = "내용";
-    String attachedFile = "첨부파일";
-
-    // 테스트에 필요한 테이터 세팅
     @BeforeEach
-    public void setUser() {
-        user = User.builder()
-                .email("이메일")
-                .gender(Gender.MALE)
-                .profileImg("사진")
-                .address("주소")
-                .build();
-
-        userRepository.save(user);
-    }
-
-    // 사용한 테이블 데이터 모두 지우기
-    @AfterEach
-    public void deleteData() {
+    private void setUserData() {
         repositories.deleteDataOfAllTables();
+        repositories.setDummyUsers();
     }
 
     @Test
-    public void get() {
+    public void readTest() {
+        User user = userRepository.findByEmail(repositories.userList.get(0).getEmail()).orElseThrow();
+
         postRepository.save(Post.builder()
-                .title(title)
+                .title("제목")
                 .author(user)
-                .content(content)
-                .attachedFile(attachedFile)
+                .content("내용")
+                .attachedFile("첨부파일")
                 .build()
         );
 
@@ -70,10 +52,10 @@ public class PostRepositoryTest {
 
         // then
         Post post = postList.get(0);
-        assertThat(post.getTitle()).isEqualTo(title);
+        assertThat(post.getTitle()).isEqualTo("제목");
         assertThat(post.getAuthor().getEmail()).isEqualTo(user.getEmail());
-        assertThat(post.getContent()).isEqualTo(content);
-        assertThat(post.getAttachedFile()).isEqualTo(attachedFile);
+        assertThat(post.getContent()).isEqualTo("내용");
+        assertThat(post.getAttachedFile()).isEqualTo("첨부파일");
     }
 
     // createdAt 자동 추가 테스트
@@ -83,11 +65,13 @@ public class PostRepositoryTest {
         LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
         // when
+        User user = userRepository.findByEmail(repositories.userList.get(0).getEmail()).orElseThrow();
+
         postRepository.save(Post.builder()
-                .title(title)
+                .title("제목")
                 .author(user)
-                .content(content)
-                .attachedFile(attachedFile)
+                .content("내용")
+                .attachedFile("첨부파일")
                 .build()
         );
 
@@ -102,11 +86,13 @@ public class PostRepositoryTest {
     @Test
     public void ModifiedAtTest() {
         // given
+        User user = userRepository.findByEmail(repositories.userList.get(0).getEmail()).orElseThrow();
+
         postRepository.save(Post.builder()
-                .title(title)
+                .title("제목")
                 .author(user)
-                .content(content)
-                .attachedFile(attachedFile)
+                .content("내용")
+                .attachedFile("첨부파일")
                 .build()
         );
 

@@ -42,12 +42,10 @@ public class VisitRepositoryTest {
     // 테스트에 필요한 필드 초기화
     @BeforeEach
     void setData() {
-        user = User.builder()
-                .email("test@test.com")
-                .gender(Gender.MALE)
-                .address("주소")
-                .profileImg("프로필사진")
-                .build();
+        repositories.deleteDataOfAllTables();
+        repositories.setDummyUsers();
+
+        user = userRepository.findAll().get(0);
 
         post = Post.builder()
                 .title("제목")
@@ -55,12 +53,6 @@ public class VisitRepositoryTest {
                 .content("내용")
                 .attachedFile("첨부파일")
                 .build();
-    }
-
-    // 사용한 테이블 데이터 모두 지우기
-    @AfterEach
-    public void deleteData() {
-        repositories.deleteDataOfAllTables();
     }
 
     // 외래키 적용 테스트
@@ -78,7 +70,6 @@ public class VisitRepositoryTest {
     @Test
     public void saveTest() {
         // given
-        userRepository.save(user);
         postRepository.save(post);
 
         List<User> userList = userRepository.findAll();
@@ -101,7 +92,6 @@ public class VisitRepositoryTest {
         // given
         LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
-        userRepository.save(user);
         postRepository.save(post);
 
         // when

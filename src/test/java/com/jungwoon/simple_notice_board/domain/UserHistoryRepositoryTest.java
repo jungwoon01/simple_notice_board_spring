@@ -1,14 +1,19 @@
 package com.jungwoon.simple_notice_board.domain;
 
 import com.jungwoon.simple_notice_board.domain.test_tool.Repositories;
+import com.jungwoon.simple_notice_board.domain.user.Gender;
+import com.jungwoon.simple_notice_board.domain.user.User;
+import com.jungwoon.simple_notice_board.domain.user.UserRepository;
+import com.jungwoon.simple_notice_board.domain.user_history.UserHistory;
 import com.jungwoon.simple_notice_board.domain.user_history.UserHistoryRepository;
-import com.jungwoon.simple_notice_board.domain.users.Gender;
-import com.jungwoon.simple_notice_board.domain.users.User;
-import com.jungwoon.simple_notice_board.domain.users.UserRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -21,62 +26,41 @@ public class UserHistoryRepositoryTest {
     @Autowired
     Repositories repositories;
 
-    @AfterEach
+    @BeforeEach
     public void deleteData() {
         repositories.deleteDataOfAllTables();
+        repositories.setDummyUsers();
     }
 
     @Test
-    public void saveTest() {
-        // when
-        User user = userRepository.save(User.builder()
-                .email("email@naver.com")
-                .address("주소")
-                .profileImg("이미지")
-                .gender(Gender.MALE)
-                .build());
-
-        // then
-        assertThat(userHistoryRepository.findAll().get(0).getUser().getId())
-                .isEqualTo(user.getId());
+    public void readTest() {
+        assertThat(userHistoryRepository.findAll().get(0).getUser().getId()).isEqualTo(userRepository.findAll().get(0).getId());
+        assertThat(userHistoryRepository.findAll().get(0).getUser().getEmail()).isEqualTo(userRepository.findAll().get(0).getEmail());
     }
 
     @Test
     public void updateTest() {
         // given
         String img1 = "이미지1";
-        String img2 = "이미지2";
-        String img3 = "이미지3";
         String address1 = "주소1";
-        String address2 = "주소2";
-        String address3 = "주소3";
 
-        User user1 = userRepository.save(User.builder()
-                .email("email@naver.com")
-                .profileImg(img1)
-                .address(address1)
-                .gender(Gender.MALE)
-                .build());
+        User user_1 = userRepository.findAll().get(0);
+
+        String beforeImg = user_1.getProfileImg();
+        String beforeAddress = user_1.getAddress();
 
         // when
-        user1.update(img2, address2);
-        User user2 = userRepository.save(user1);
+        user_1.update(img1, address1);
+        userRepository.save(user_1);
 
-        user2.update(img3, address3);
-        userRepository.save(user2);
-
-        userHistoryRepository.findAll().forEach(System.out::println);
+        List<UserHistory> userHistories = userHistoryRepository.findByUserId(user_1.getId());
+        UserHistory history_1 = userHistories.get(0);
+        UserHistory history_2 = userHistories.get(1);
 
         // then
-        checkHistory(0, user1.getId(), img1, address1);
-        checkHistory(1, user1.getId(), img2, address2);
-        checkHistory(2, user1.getId(), img3, address3);
-    }
-
-    public void checkHistory(int index, Long id, String profileImg, String address) {
-        // 예상 이미지와 히스토리 내용 일치하는지 검사
-        assertThat(userHistoryRepository.findByUserId(id).get(index).getProfileImg()).isEqualTo(profileImg);
-        // 예상 주소와 히스토리 내용 일치하는지 검사
-        assertThat(userHistoryRepository.findByUserId(id).get(index).getAddress()).isEqualTo(address);
+        assertThat(history_1.getProfileImg()).isEqualTo(beforeImg);
+        assertThat(history_1.getAddress()).isEqualTo(beforeAddress);
+        assertThat(history_2.getProfileImg()).isEqualTo(img1);
+        assertThat(history_2.getAddress()).isEqualTo(address1);
     }
 }

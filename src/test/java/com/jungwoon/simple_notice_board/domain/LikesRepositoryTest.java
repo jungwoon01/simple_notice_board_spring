@@ -39,15 +39,17 @@ public class LikesRepositoryTest {
     Post post;
     User user;
 
+    LocalDateTime now;
+
     // 테스트에 필요한 필드 초기화
     @BeforeEach
     void setData() {
-        user = User.builder()
-                .email("test@test.com")
-                .gender(Gender.MALE)
-                .address("주소")
-                .profileImg("프로필사진")
-                .build();
+        now = LocalDateTime.now().minusSeconds(10L);
+
+        repositories.deleteDataOfAllTables();
+        repositories.setDummyUsers();
+
+        user = userRepository.findAll().get(0);
 
         post = Post.builder()
                 .title("제목")
@@ -55,12 +57,6 @@ public class LikesRepositoryTest {
                 .content("내용")
                 .attachedFile("첨부파일")
                 .build();
-    }
-
-    // 사용한 테이블 데이터 모두 지우기
-    @AfterEach
-    public void deleteData() {
-        repositories.deleteDataOfAllTables();
     }
 
     // 외래키가 잘 설정 되었는지 테스트
@@ -78,7 +74,6 @@ public class LikesRepositoryTest {
     @Test
     public void saveTest() {
         // given
-        userRepository.save(user);
         postRepository.save(post);
 
         List<User> userList = userRepository.findAll();
@@ -98,10 +93,7 @@ public class LikesRepositoryTest {
 
     @Test
     public void createdAtTest() {
-        // given
-        LocalDateTime now = LocalDateTime.now().minusSeconds(1L);
 
-        userRepository.save(user);
         postRepository.save(post);
 
         // when

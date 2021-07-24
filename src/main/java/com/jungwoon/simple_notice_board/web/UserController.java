@@ -1,4 +1,4 @@
-package com.jungwoon.simple_notice_board.web.controller;
+package com.jungwoon.simple_notice_board.web;
 
 import com.jungwoon.simple_notice_board.config.auth.LoginUser;
 import com.jungwoon.simple_notice_board.config.auth.dto.SessionUser;

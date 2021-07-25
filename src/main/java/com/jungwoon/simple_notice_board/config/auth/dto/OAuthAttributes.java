@@ -11,79 +11,75 @@ import java.util.Map;
 @Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
-    private String nameAttributeKey;
+    private String attributesId;
     private String email;
-    private String picture;
     private String registrationId;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String email, String picture, String registrationId) {
+    public OAuthAttributes(Map<String, Object> attributes, String attributesId, String email, String registrationId) {
         this.attributes = attributes;
-        this.nameAttributeKey = nameAttributeKey;
+        this.attributesId = attributesId;
         this.email = email;
-        this.picture = picture;
         this.registrationId = registrationId;
     }
 
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        // 네이버 로그인이면 userNameAttributeName 을 id로 지정
+    public static OAuthAttributes of(String registrationId, Map<String, Object> attributes) {
+        // 카카오 로그인인지
         if("naver".equals(registrationId)) {
-            return ofNaver(registrationId,"id", attributes);
+            return ofNaver(registrationId, attributes);
         }
 
-        // 카카오 로그인이면 userNameAttributeName 을 id로 지정
+        // 네이버 로그인인지
         if("kakao".equals(registrationId)) {
-            return ofKakao(registrationId,"id", attributes);
+            return ofKakao(registrationId, attributes);
         }
 
-        return ofGoogle(registrationId, userNameAttributeName, attributes);
+        return ofGoogle(registrationId, attributes);
     }
 
-    private static OAuthAttributes ofGoogle(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    // 구글 attributes 리턴
+    private static OAuthAttributes ofGoogle(String registrationId, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
+                .attributesId((String)attributes.get("sub"))
                 .email((String) attributes.get("email"))
-                .picture((String) attributes.get("picture"))
                 .registrationId(registrationId)
                 .attributes(attributes)
-                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
-    private static OAuthAttributes ofNaver(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    // 네이버 attributes 리턴
+    private static OAuthAttributes ofNaver(String registrationId, Map<String, Object> attributes) {
+        String attributesId = (String) attributes.get("id");
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuthAttributes.builder()
+                .attributesId(attributesId)
                 .email((String) response.get("email"))
-                .picture((String) response.get("profile_image"))
                 .registrationId(registrationId)
                 .attributes(response)
-                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
-    private static OAuthAttributes ofKakao(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    // 카카오 attributes 리턴
+    private static OAuthAttributes ofKakao(String registrationId, Map<String, Object> attributes) {
+        String attributesId = String.valueOf(attributes.get("id"));
         Map<String,Object> response = (Map<String, Object>)attributes.get("kakao_account");
         Map<String, Object> profile = (Map<String, Object>) response.get("profile");
 
-        System.out.println(attributes);
-
         return OAuthAttributes.builder()
-                .email((String) response.get("email"))
-                .picture((String) profile.get("profile_image_url"))
+                .attributesId(attributesId)
+                .email((String) profile.get("email"))
                 .registrationId(registrationId)
                 .attributes(attributes)
-                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 
-    public User toEntity() {
+    public User toUserEntity() {
         return User.builder()
-                .email(email)
-                .profileImg(picture)
-                .role(Role.HOST)
-                .gender(Gender.MALE)
-                .address("주소다")
+                .attributesId(attributesId)
                 .registrationId(registrationId)
+                .email(email)
+                .role(Role.VISITOR)
                 .build();
     }
 }

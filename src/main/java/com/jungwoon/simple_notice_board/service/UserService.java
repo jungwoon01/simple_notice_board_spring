@@ -1,4 +1,4 @@
-package com.jungwoon.simple_notice_board.service.user;
+package com.jungwoon.simple_notice_board.service;
 
 import com.jungwoon.simple_notice_board.domain.user.UserRepository;
 import com.jungwoon.simple_notice_board.web.dto.user.UserListDto;
